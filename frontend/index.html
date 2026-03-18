@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Swarm UI</title>
+  <link rel="stylesheet" href="/static/css/style.css" />
+</head>
+<body>
+  <!-- Top navigation bar -->
+  <header id="topbar">
+    <div class="topbar-brand">🐝 Swarm UI</div>
+    <nav class="topbar-nav">
+      <button class="tab-btn active" data-panel="chat">Chat</button>
+      <button class="tab-btn" data-panel="agents">Agents</button>
+      <button class="tab-btn" data-panel="home">Home&nbsp;Assistant</button>
+      <button class="tab-btn" data-panel="openclaw">OpenClaw</button>
+    </nav>
+    <div class="topbar-status" id="statusIndicator">
+      <span class="dot" id="dotOllama" title="Ollama"></span>
+      <span class="dot" id="dotHA" title="Home Assistant"></span>
+      <span class="dot" id="dotOC" title="OpenClaw"></span>
+    </div>
+  </header>
+
+  <!-- Main content area -->
+  <main id="app">
+    <!-- Chat panel -->
+    <section class="panel active" id="panel-chat">
+      <div class="chat-container">
+        <div class="chat-messages" id="chatMessages"></div>
+        <form class="chat-input-bar" id="chatForm">
+          <input
+            type="text"
+            id="chatInput"
+            placeholder="Type a message…"
+            autocomplete="off"
+          />
+          <button type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <!-- Agents panel -->
+    <section class="panel" id="panel-agents">
+      <div class="agents-container">
+        <h2>Agent Orchestration</h2>
+        <p class="subtitle">Run multi-agent workflows powered by Autogen</p>
+        <form id="agentForm" class="agent-form">
+          <textarea
+            id="agentPrompt"
+            rows="4"
+            placeholder="Describe the task for the agent team…"
+          ></textarea>
+          <div class="agent-options">
+            <label>Max rounds <input type="number" id="agentRounds" value="10" min="1" max="50" /></label>
+          </div>
+          <button type="submit">Run Task</button>
+        </form>
+        <div id="agentResult" class="agent-result"></div>
+      </div>
+    </section>
+
+    <!-- Home Assistant panel -->
+    <section class="panel" id="panel-home">
+      <div class="ha-container">
+        <h2>Home Assistant</h2>
+        <p class="subtitle">Monitor and control smart home devices</p>
+        <div class="ha-toolbar">
+          <button id="haRefresh">Refresh States</button>
+        </div>
+        <div id="haEntities" class="ha-entities"></div>
+      </div>
+    </section>
+
+    <!-- OpenClaw panel -->
+    <section class="panel" id="panel-openclaw">
+      <div class="oc-container">
+        <h2>OpenClaw</h2>
+        <p class="subtitle">Manage and monitor data pipelines</p>
+        <div class="oc-toolbar">
+          <button id="ocRefresh">Refresh Pipelines</button>
+        </div>
+        <div id="ocPipelines" class="oc-pipelines"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
