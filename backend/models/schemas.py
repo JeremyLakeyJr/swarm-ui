@@ -76,6 +76,26 @@ class DataSendRequest(BaseModel):
 
 
 # ------------------------------------------------------------------
+# Microsoft Agent Framework
+# ------------------------------------------------------------------
+
+
+class AgentFrameworkRunRequest(BaseModel):
+    prompt: str
+    agent_name: str = "swarm_agent"
+    instructions: str = ""
+    model: str = ""
+    metadata: dict[str, Any] = Field(default_factory=dict)
+
+
+class AgentFrameworkRunResponse(BaseModel):
+    success: bool
+    messages: list[dict[str, Any]] = Field(default_factory=list)
+    summary: str = ""
+    error: str | None = None
+
+
+# ------------------------------------------------------------------
 # Generic
 # ------------------------------------------------------------------
 

@@ -30,10 +30,12 @@
       setDot("dotOllama", data.services.ollama === "connected");
       setDot("dotHA", data.services.homeassistant === "connected");
       setDot("dotOC", data.services.openclaw === "connected");
+      setDot("dotAF", data.services.agent_framework === "available");
     } catch {
       setDot("dotOllama", false);
       setDot("dotHA", false);
       setDot("dotOC", false);
+      setDot("dotAF", false);
     }
   }
 
@@ -176,6 +178,35 @@
   }
 
   ocRefresh.addEventListener("click", loadPipelines);
+
+  // ---- Agent Framework ----
+  const afForm = document.getElementById("afForm");
+  const afResult = document.getElementById("afResult");
+
+  afForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const prompt = document.getElementById("afPrompt").value.trim();
+    if (!prompt) return;
+    const agentName = document.getElementById("afAgentName").value.trim() || "swarm_agent";
+    const instructions = document.getElementById("afInstructions").value.trim();
+    afResult.textContent = "Running…";
+
+    try {
+      const res = await fetch(API + "/api/agent-framework/run", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ prompt, agent_name: agentName, instructions }),
+      });
+      const data = await res.json();
+      if (data.success) {
+        afResult.textContent = data.summary || JSON.stringify(data.messages, null, 2);
+      } else {
+        afResult.textContent = "Error: " + (data.error || "unknown");
+      }
+    } catch (err) {
+      afResult.textContent = "Error: " + err.message;
+    }
+  });
 
   // ---- Helpers ----
   function escapeHtml(str) {

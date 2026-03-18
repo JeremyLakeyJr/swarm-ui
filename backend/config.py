@@ -31,6 +31,11 @@ class Settings(BaseSettings):
     openclaw_base_url: str = "http://localhost:9000"
     openclaw_api_key: str = ""
 
+    # Microsoft Agent Framework
+    agent_framework_base_url: str = "http://localhost:11434"
+    agent_framework_model: str = "llama3"
+    agent_framework_api_key: str = ""
+
     model_config = {"env_file": ".env", "env_file_encoding": "utf-8"}
 
 

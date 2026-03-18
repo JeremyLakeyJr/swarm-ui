@@ -20,7 +20,8 @@ Returns connectivity status for all integrated services.
   "services": {
     "ollama": "connected",
     "homeassistant": "unavailable",
-    "openclaw": "unavailable"
+    "openclaw": "unavailable",
+    "agent_framework": "available"
   }
 }
 ```
@@ -157,5 +158,39 @@ Send data to an OpenClaw module.
 {
   "endpoint": "ingest",
   "data": {"key": "value"}
+}
+```
+
+---
+
+## Agent Framework
+
+### `POST /api/agent-framework/run`
+
+Run an AI agent using the Microsoft Agent Framework.
+
+**Request:**
+
+```json
+{
+  "prompt": "Summarize the latest news",
+  "agent_name": "news_agent",
+  "instructions": "You are a news summarization specialist.",
+  "model": "",
+  "metadata": {}
+}
+```
+
+**Response:**
+
+```json
+{
+  "success": true,
+  "messages": [
+    {"role": "user", "content": "Summarize the latest news"},
+    {"role": "assistant", "content": "Here is a summary…"}
+  ],
+  "summary": "Here is a summary…",
+  "error": null
 }
 ```

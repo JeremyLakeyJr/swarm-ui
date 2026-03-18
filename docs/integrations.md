@@ -118,3 +118,38 @@ OPENCLAW_API_KEY=your-openclaw-api-key
 4. Register the router in `backend/app.py`.
 5. Add a health-check call in `backend/routes/health.py`.
 6. Write tests in `tests/test_my_service.py`.
+
+---
+
+## 5. Microsoft Agent Framework (AI Agent Execution)
+
+**Module:** `backend/integrations/agent_framework_client.py`
+
+The `AgentFrameworkClient` wraps the Microsoft Agent Framework SDK to create and run AI agents. It connects to an OpenAI-compatible LLM endpoint (defaulting to Ollama) and uses the framework's `Agent` class for task execution.
+
+| Method | Description |
+|--------|-------------|
+| `run_task()` | Create an agent and run a prompt through it |
+| `health_check()` | Return `True` if the `agent-framework` package is importable |
+
+### Configuration
+
+```env
+AGENT_FRAMEWORK_BASE_URL=http://localhost:11434
+AGENT_FRAMEWORK_MODEL=llama3
+AGENT_FRAMEWORK_API_KEY=
+```
+
+### Customising Agents
+
+Pass custom instructions and agent names via the API request:
+
+```json
+{
+  "prompt": "Summarize the latest news",
+  "agent_name": "news_agent",
+  "instructions": "You are a news summarization specialist."
+}
+```
+
+The integration uses lazy imports so the application can start even when the `agent-framework-core` package is not installed.

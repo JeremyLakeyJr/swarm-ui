@@ -30,6 +30,30 @@ Swarm UI follows a **backend-for-frontend** pattern: a FastAPI server exposes a 
    └─────────┘ └──────────┘ └────────┘ └────────┘
 ```
 
+In addition, the **Microsoft Agent Framework** integration provides a
+separate agent execution path:
+
+```
+┌──────────────────────────────────────────┐
+│  FastAPI Backend                         │
+│  ┌─────────────────────┐                 │
+│  │ Agent Framework     │                 │
+│  │ Routes              │                 │
+│  └─────────┬───────────┘                 │
+│  ┌─────────▼───────────┐                 │
+│  │ AgentFrameworkClient │                │
+│  │ (agent-framework SDK)│                │
+│  └─────────┬───────────┘                 │
+└────────────┼─────────────────────────────┘
+             │
+        ┌────▼─────┐
+        │  LLM     │
+        │ Provider │
+        │(Ollama / │
+        │ OpenAI)  │
+        └──────────┘
+```
+
 ## Key Design Decisions
 
 1. **Async everywhere** – All integration clients use `httpx.AsyncClient` for non-blocking I/O.
@@ -45,6 +69,7 @@ Swarm UI follows a **backend-for-frontend** pattern: a FastAPI server exposes a 
 | Backend framework | FastAPI + Uvicorn |
 | AI inference | Ollama |
 | Agent orchestration | Microsoft Autogen |
+| Agent framework | Microsoft Agent Framework |
 | Smart home | Home Assistant REST API |
 | Data pipelines | OpenClaw |
 | Frontend | Vanilla HTML/CSS/JS |
