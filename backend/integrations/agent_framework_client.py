@@ -114,7 +114,10 @@ class AgentFrameworkClient:
             )
 
         except Exception as exc:  # noqa: BLE001
-            return AgentFrameworkResult(success=False, error=str(exc))
+            return AgentFrameworkResult(
+                success=False,
+                error=f"{type(exc).__name__}: {exc}",
+            )
 
     async def health_check(self) -> bool:
         """Return ``True`` when the agent-framework package is importable."""
